@@ -35,6 +35,8 @@
 #include "stm32f1xx_hal.h"
 
 /* USER CODE BEGIN Includes */
+#include "car_motor.h"
+#include "SG90_motor.h"
 
 /* USER CODE END Includes */
 
@@ -68,8 +70,7 @@ static void MX_ADC1_Init(void);
 static void MX_TIM6_Init(void);
 static void MX_TIM7_Init(void);
 static void MX_I2C2_Init(void);
-static void MX_TIM2_Init(void);
-static void MX_TIM3_Init(void);
+
 static void MX_TIM4_Init(void);
 
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
@@ -77,130 +78,15 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
                                 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
-void delay_nus(uint16_t time);
+void RGB_led_init();
+void set_RGB_PWM_DUTY(uint16_t R_val, uint16_t G_val, uint16_t B_val);
 
 /* USER CODE END PFP */
 
 
 /* USER CODE BEGIN 0 */
 
-//µ÷ÊÔ³ÌÐò-ºôÎüµÆ´ó·¨
-void LEDTest()
-{
-		int i;
-	
-	 for(i=0;i<500;i++)
-		{
-			HAL_GPIO_WritePin(GPIOB,GPIO_PIN_8,GPIO_PIN_SET);
-			HAL_Delay(i);
-			HAL_GPIO_WritePin(GPIOB,GPIO_PIN_8,GPIO_PIN_RESET);
-			HAL_Delay(500-i);
-		}
-	for(i=0;i<500;i++)
-	{
-		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_8,GPIO_PIN_RESET);
-		delay_nus(i);
-		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_8,GPIO_PIN_SET);
-		HAL_Delay(500-i);
-	}
-		
-}
-
-
-
-/* USER CODE END 0 */
-
-int main(void)
-{
-  /* USER CODE BEGIN 1 */
-
-  /* USER CODE END 1 */
-
-  /* MCU Configuration----------------------------------------------------------*/
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
-
-  /* Configure the system clock */
-  SystemClock_Config();
-
-  /* Initialize all configured peripherals */
-  MX_GPIO_Init();
-//  MX_DMA_Init();
-//  MX_USART1_UART_Init();
-//  MX_ADC1_Init();
-//  MX_TIM6_Init();   //³¬Éù²¨²â¾à
-//  MX_TIM7_Init();   //³¬Éù²¨²â¾à
-//  MX_I2C2_Init();	  //OLED
-//    MX_TIM2_Init();  //µç»úµ÷ËÙPWM
-//  MX_TIM3_Init();	 //¶æ»ú×ª½ÇPWM
-  
-	//MX_TIM4_Init(); //ÈýÉ«µÆPWM¿ØÖÆ
-
-
-  /* USER CODE BEGIN 2 */
-
-#if 0
-	__HAL_TIM_SET_COMPARE(&htim2,TIM_CHANNEL_1,250); //×óµç»ú ENA PA0 PWMÕ¼¿Õ±È(0~999),È¡250
-	__HAL_TIM_SET_COMPARE(&htim2,TIM_CHANNEL_4,250); //×óµç»ú ENb PA3 PWMÕ¼¿Õ±È(0~999),È¡250
-#endif
-
-  /* USER CODE END 2 */
-
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
-  while (1)
-  {
-	
-
-		//Ð¡³µÇ°½ø
-		  //×óµç»ú Õý×ª
-		 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_SET);  //IN1 PA2 1
-		 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_RESET); //IN2 PB9 0 
-		  //ÓÒµç»ú Õý×ª
-		 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);  //IN3 PA1 1
-		 HAL_GPIO_WritePin(GPIOC, GPIO_PIN_9, GPIO_PIN_RESET); //N4 PC9 0
-		 HAL_Delay(100); //ÑÓÊ±100ms
-		
-		//Ð¡³µºóÍË
-		  //×óµç»ú ·´×ª
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET); //IN1 PA2  0
-		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_SET);   //IN2 PB9  1
-			////ÓÒµç»ú ·´×ª
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET); // IN3 PA1  0
-		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_9, GPIO_PIN_SET);   // IN4 PC9  1
-		HAL_Delay(100);
-		
-		//Ð¡³µ×ó×ª
-		 //×óµç»ú ·´×ª
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);  //IN1 PA2  0
-		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_SET);    // IN2 PB9  1
-		 //ÓÒµç»ú Õý×ª
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);  //IN3 PA1  1
-		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_9, GPIO_PIN_RESET); // IN4 PC9  0
-		HAL_Delay(100);
-		
-		//Ð¡³µÓÒ×ª
-		  //×óµç»ú Õý×ª
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_SET);  //IN1 PA2  1
-		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_RESET); //IN2 PB9  0
-		  //ÓÒµç»ú ·´×ª
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);  //IN3 PA1  0
-		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_9, GPIO_PIN_SET);    //IN4 PC9  1
-			HAL_Delay(100);
-
-   
-		//ºôÎüµÆµ÷ÊÔ,PB8ÔÚMX_GPIO_Init()ÖÐÓÐ³õÊ¼»¯
-		LEDTest();
-
-  }
-  /* USER CODE END */
-
-}
-
-
-
-//ÑÓÊ±º¯Êý
+//å»¶æ—¶å‡½æ•°,us
 void delay_nus(uint16_t time)
 {
 	uint16_t i = 0;
@@ -210,6 +96,115 @@ void delay_nus(uint16_t time)
 		i = 10;
 		while(i--);
 	}
+}
+
+
+//è°ƒè¯•ç¨‹åº-å‘¼å¸ç¯å¤§æ³•
+void LEDTest()
+{
+		int i;
+	
+	for(i=0;i<500;i++)
+	{
+		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_8,GPIO_PIN_SET);
+		HAL_Delay(i);
+		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_8,GPIO_PIN_RESET);
+		HAL_Delay(500-i);
+	}
+	for(i=0;i<500;i++)
+	{
+		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_8,GPIO_PIN_RESET);
+		HAL_Delay(i);
+		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_8,GPIO_PIN_SET);
+		HAL_Delay(500-i);
+	}	
+}
+
+
+
+/* USER CODE END 0 */
+
+int main(void)
+{
+  /* USER CODE BEGIN 1 */
+	int i;
+  /* USER CODE END 1 */
+
+  /* MCU Configuration----------------------------------------------------------*/
+
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  HAL_Init();
+  /* Configure the system clock */
+  SystemClock_Config();
+
+  /* Initialize all configured peripherals */
+  MX_GPIO_Init();
+	
+//  MX_DMA_Init();
+	
+//  MX_USART1_UART_Init();  //UART1ç”±äºŽç¡¬ä»¶æŽ¥å£åŽŸå› æ— æ³•ä½¿ç”¨
+	
+//  MX_ADC1_Init();
+//  MX_TIM6_Init();   //è¶…å£°æ³¢æµ‹è·
+//  MX_TIM7_Init();   //è¶…å£°æ³¢æµ‹è·
+//  MX_I2C2_Init();	  //OLED
+	
+
+  /* USER CODE BEGIN 2 */
+	RGB_led_init();
+
+//	PWM_init();
+//SG90_motor_init();
+//SG90_TEST();
+
+  /* USER CODE END 2 */
+
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
+  while (1)
+  {
+		
+		//LEDTest();	//å‘¼å¸ç¯è°ƒè¯•,PB8åœ¨MX_GPIO_Init()ä¸­æœ‰åˆå§‹åŒ–
+		set_RGB_PWM_DUTY(999,0,0);
+		HAL_Delay(1000);
+		set_RGB_PWM_DUTY(0,999,0);
+		HAL_Delay(1000);
+		set_RGB_PWM_DUTY(0,0,999);
+		HAL_Delay(1000);
+		
+  }
+  /* USER CODE END */
+}
+
+/*
+@å‡½æ•°åŠŸèƒ½: RGBä¸‰è‰²ç¯åˆå§‹åŒ–
+*/
+void RGB_led_init()
+{
+	MX_TIM4_Init(); //ä¸‰è‰²ç¯PWMæŽ§åˆ¶
+	HAL_TIM_PWM_Start(&htim4,TIM_CHANNEL_3);	
+	HAL_TIM_PWM_Start(&htim4,TIM_CHANNEL_1);		
+	HAL_TIM_PWM_Start(&htim4,TIM_CHANNEL_2);	
+}
+
+
+/*
+@å‡½æ•°åŠŸèƒ½ï¼šè®¾ç½®RGBæ˜¾ç¤ºå¯¹åº”çš„PWMå ç©ºæ¯”
+@R_val:		PB8 -R	PWMå ç©ºæ¯”(0~999)
+@G_val:		PB7 -G	PWMå ç©ºæ¯”(0~999)
+@B_val:		PB6 -B	PWMå ç©ºæ¯”(0~999)
+
+|R_val | G_val | B_val | æ˜¾ç¤ºçš„é¢œè‰²
+	0 			0 			0				æ— è‰²
+	999			0				0				çº¢è‰²
+	0				999			0				ç»¿è‰²
+	0				0				999			è“è‰²
+*/
+void set_RGB_PWM_DUTY(uint16_t R_val, uint16_t G_val, uint16_t B_val)
+{
+	__HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_3,R_val);	//PB8 -R
+	__HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_1,B_val);	//PB7 -G
+	__HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_2,G_val);	//PB6 -B
 }
 
 
@@ -320,7 +315,7 @@ static void MX_I2C2_Init(void)
 }
 
 /* TIM2 init function */
-static void MX_TIM2_Init(void)
+void MX_TIM2_Init(void)
 {
 
   TIM_MasterConfigTypeDef sMasterConfig;
@@ -329,7 +324,7 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 800; 
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 999;	//¼ÆÊýÖµ
+  htim2.Init.Period = 999;	//è®¡æ•°å€¼
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   if (HAL_TIM_PWM_Init(&htim2) != HAL_OK)
   {
@@ -344,8 +339,8 @@ static void MX_TIM2_Init(void)
   }
 
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 20;  //Õ¼¿Õ±ÈÖµ 0~999
-  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.Pulse = 999;  //å ç©ºæ¯”å€¼ 0~999
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH; //é«˜ç”µå¹³è„‰å®½
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
   {
@@ -362,7 +357,7 @@ static void MX_TIM2_Init(void)
 }
 
 /* TIM3 init function */
-static void MX_TIM3_Init(void)
+void MX_TIM3_Init(void)
 {
 
   TIM_MasterConfigTypeDef sMasterConfig;
@@ -371,7 +366,7 @@ static void MX_TIM3_Init(void)
   htim3.Instance = TIM3;
   htim3.Init.Prescaler = 88;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 1799;		//¼ÆÊýÖµ
+  htim3.Init.Period = 1799;		//è®¡æ•°å€¼
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   if (HAL_TIM_PWM_Init(&htim3) != HAL_OK)
   {
@@ -386,7 +381,7 @@ static void MX_TIM3_Init(void)
   }
 
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 80;			//Õ¼¿Õ±È
+  sConfigOC.Pulse = 80;			//å ç©ºæ¯”
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   if (HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
@@ -561,9 +556,9 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1|GPIO_PIN_2, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-//  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_RESET);
 	
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8, GPIO_PIN_RESET);
+//	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : PC2 */
   GPIO_InitStruct.Pin = GPIO_PIN_2;
@@ -584,15 +579,15 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PB9 */
-//  GPIO_InitStruct.Pin = GPIO_PIN_9;
-//  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-//  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-//  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-	GPIO_InitStruct.Pin = GPIO_PIN_9 | GPIO_PIN_8;
+  GPIO_InitStruct.Pin = GPIO_PIN_9;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+//	GPIO_InitStruct.Pin = GPIO_PIN_9 | GPIO_PIN_8;
+//  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+//  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+//  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 }
 
