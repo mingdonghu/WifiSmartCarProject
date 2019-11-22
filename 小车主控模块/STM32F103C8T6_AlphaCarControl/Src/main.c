@@ -38,6 +38,13 @@
 #include "car_motor.h"
 #include "SG90_motor.h"
 
+//#define CMSIS_LIB
+#ifdef CMSIS_LIB		
+#define ARM_MATH_CM3		//使用CMSIS库函数
+#include "arm_math.h"
+#include "arm_const_structs.h"
+#endif
+
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -88,7 +95,10 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	
+#ifdef CMSIS_LIB
+	q7_t Dst[2] = {0};
+	q7_t Src[2] = {-19,-16};
+#endif
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -115,6 +125,11 @@ int main(void)
 	PWM_init();
 	SG90_motor_init();
 	
+#ifdef CMSIS_LIB
+	arm_abs_q7(Src,Dst,2);	//求Dst对应空间的绝对值并存入Src对应空间
+	HAL_UART_Transmit(&huart2,Dst , 2, 0);
+#endif
+
 	HAL_UART_Receive_IT(&huart2, RxData, 2);
 	
   /* USER CODE END 2 */

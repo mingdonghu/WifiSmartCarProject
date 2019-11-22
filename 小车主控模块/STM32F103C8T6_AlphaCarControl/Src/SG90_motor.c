@@ -25,7 +25,7 @@ uint16_t udVal = UD_FLAT_LOOK_VAL;		//摄像头上下转动控制值
 
 
 //@函数功能：摄像头转动控制初始化
-void SG90_motor_init()
+void SG90_motor_init(void)
 {
 	HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_1);	//PA0  UD_SG90Motor
 	HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_2);	//PA1	 LR_SG90Motor
@@ -62,7 +62,7 @@ void SG90_motor_set_LR_val(uint16_t val)
 }
 
 //@函数功能:摄像头左转
-void camera_left_move()
+void camera_left_move(void)
 {
 		rlVal = rlVal + 3;
 	if(rlVal >= LR_LEFT_VAL){
@@ -73,7 +73,7 @@ void camera_left_move()
 }
 
 //@函数功能:摄像头右转
-void camera_right_move()
+void camera_right_move(void)
 {
 		rlVal = rlVal - 3;
 	if(rlVal <= LR_RIGHT_VAL){
@@ -84,7 +84,7 @@ void camera_right_move()
 }
 
 //@函数功能:摄像头上转
-void camera_up_move()
+void camera_up_move(void)
 {
 	udVal = udVal - 3;
 	if(udVal <= UD_FLAT_LOOK_VAL){
@@ -95,7 +95,7 @@ void camera_up_move()
 }
 
 //@函数功能:摄像头下转
-void camera_down_move()
+void camera_down_move(void)
 {
 	udVal = udVal + 3;
 	if(udVal >= UD_OVERlOOK_VAL){
@@ -107,7 +107,7 @@ void camera_down_move()
 
 
 //@函数功能：摄像头动作测试
-void camera_TEST()
+void camera_TEST(void)
 {
 	int i;
 	

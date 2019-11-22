@@ -21,7 +21,7 @@
 extern TIM_HandleTypeDef htim1;
 
 //@函数功能:	电机PWM调速初始化
-void PWM_init()
+void PWM_init(void)
 {
 	HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_4);
 	HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_3);
@@ -76,7 +76,7 @@ void motor_reversal_rotation(Motor_t motor_type)
 }
 
 //#函数功能:控制小车停止
-void car_stop()
+void car_stop(void)
 {
 	//左右电机停
 	//__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_4,999); //左电机 ENA PA11 PWM占空比(0~999)  一直高电平
@@ -89,28 +89,28 @@ void car_stop()
 }
 
 //@函数功能：控制小车前进
-void car_foreward()
+void car_foreward(void)
 {
 	motor_forward_rotation(ML);
 	motor_forward_rotation(MR);
 }
 
 //@函数功能：控制小车后退
-void car_backward()
+void car_backward(void)
 {
 	motor_reversal_rotation(ML);
 	motor_reversal_rotation(MR);
 }
 
 //@函数功能：控制小车原地左转
-void car_left_in_position()
+void car_left_in_position(void)
 {
   motor_reversal_rotation(ML);	//左反
 	motor_forward_rotation(MR);		//右正
 }
 
 //@函数功能：控制小车原地右转
-void car_right_in_position()
+void car_right_in_position(void)
 {
  	motor_forward_rotation(ML);		//左正
 	motor_reversal_rotation(MR);	//右反

@@ -12,6 +12,7 @@
 "stm32f103c8t6_alphacarcontrol\stm32f1xx_hal.o"
 "stm32f103c8t6_alphacarcontrol\stm32f1xx_hal_gpio_ex.o"
 "stm32f103c8t6_alphacarcontrol\stm32f1xx_hal_uart.o"
+"C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Lib\ARM\arm_cortexM3l_math.lib"
 "stm32f103c8t6_alphacarcontrol\startup_stm32f103xb.o"
 "stm32f103c8t6_alphacarcontrol\main.o"
 "stm32f103c8t6_alphacarcontrol\stm32f1xx_hal_msp.o"

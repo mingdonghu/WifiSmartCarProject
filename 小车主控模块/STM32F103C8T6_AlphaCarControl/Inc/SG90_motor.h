@@ -26,13 +26,13 @@
 #define LR_LEFT_VAL 198	//最左
 
 /*********************************/
-void SG90_motor_init();
+void SG90_motor_init(void);
 void SG90_motor_set_UD_val(uint16_t val);
 void SG90_motor_set_LR_val(uint16_t val);
-void camera_TEST();
-void camera_left_move();
-void camera_right_move();
-void camera_up_move();
-void camera_down_move();
+void camera_TEST(void);
+void camera_left_move(void);
+void camera_right_move(void);
+void camera_up_move(void);
+void camera_down_move(void);
 
 #endif

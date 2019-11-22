@@ -25,14 +25,14 @@ typedef enum{
 }Motor_t;
 
 /*******************************************************************************/
-void PWM_init();
+void PWM_init(void);
 void set_left_PWM_duty(uint16_t left_motor_duty_val);
 void set_right_PWM_duty(uint16_t right_motor_duty_val);
-void car_stop();
-void car_foreward();
-void car_backward();
-void car_left_in_position();
-void car_right_in_position();
+void car_stop(void);
+void car_foreward(void);
+void car_backward(void);
+void car_left_in_position(void);
+void car_right_in_position(void);
 void motor_forward_rotation(Motor_t motor_type);
 void motor_reversal_rotation(Motor_t motor_type);
 /******************************************************************************/
