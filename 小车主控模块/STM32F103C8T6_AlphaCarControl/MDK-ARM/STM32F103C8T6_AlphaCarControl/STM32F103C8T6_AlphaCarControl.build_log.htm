@@ -1,0 +1,83 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: μVision V5.14.0.0
+Copyright (C) 2015 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: HGxiaohugong Administrator, ldrobot, LIC=FQQGK-ZZVC7-WJM6K-ZUK3W-A1NVC-B2PJ0
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Professional  Version: 5.14.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.05 update 1 (build 106)
+Assembler:       Armasm.exe V5.05 update 1 (build 106)
+Linker/Locator:  ArmLink.exe V5.05 update 1 (build 106)
+Library Manager: ArmAr.exe V5.05 update 1 (build 106)
+Hex Converter:   FromElf.exe V5.05 update 1 (build 106)
+CPU DLL:         SARMCM3.DLL V5.14.0.0
+Dialog DLL:      DCM.DLL V1.13.1.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.14.0_KEIL
+Dialog DLL:      TCM.DLL V1.14.4.0
+ 
+<h2>Project:</h2>
+D:\wifi智能小车项目\CarControlCode\STM32F103C8T6_AlphaCarControl\MDK-ARM\STM32F103C8T6_AlphaCarControl.uvprojx
+Project File Date:  11/21/2019
+
+<h2>Output:</h2>
+Build target 'STM32F103C8T6_AlphaCarControl'
+compiling main.c...
+../Inc/car_motor.h(28): warning:  #1295-D: Deprecated declaration PWM_init - give arg types
+  void PWM_init();
+../Inc/car_motor.h(31): warning:  #1295-D: Deprecated declaration car_stop - give arg types
+  void car_stop();
+../Inc/car_motor.h(32): warning:  #1295-D: Deprecated declaration car_foreward - give arg types
+  void car_foreward();
+../Inc/car_motor.h(33): warning:  #1295-D: Deprecated declaration car_backward - give arg types
+  void car_backward();
+../Inc/car_motor.h(34): warning:  #1295-D: Deprecated declaration car_left_in_position - give arg types
+  void car_left_in_position();
+../Inc/car_motor.h(35): warning:  #1295-D: Deprecated declaration car_right_in_position - give arg types
+  void car_right_in_position();
+../Inc/SG90_motor.h(29): warning:  #1295-D: Deprecated declaration SG90_motor_init - give arg types
+  void SG90_motor_init();
+../Inc/SG90_motor.h(32): warning:  #1295-D: Deprecated declaration camera_TEST - give arg types
+  void camera_TEST();
+../Inc/SG90_motor.h(33): warning:  #1295-D: Deprecated declaration camera_left_move - give arg types
+  void camera_left_move();
+../Inc/SG90_motor.h(34): warning:  #1295-D: Deprecated declaration camera_right_move - give arg types
+  void camera_right_move();
+../Inc/SG90_motor.h(35): warning:  #1295-D: Deprecated declaration camera_up_move - give arg types
+  void camera_up_move();
+../Inc/SG90_motor.h(36): warning:  #1295-D: Deprecated declaration camera_down_move - give arg types
+  void camera_down_move();
+../Src/main.c(315): warning:  #177-D: function "MX_TIM4_Init" was declared but never referenced
+  static void MX_TIM4_Init(void)
+../Src/main.c(283): warning:  #177-D: function "MX_TIM3_Init" was declared but never referenced
+  static void MX_TIM3_Init(void)
+../Src/main.c: 14 warnings, 0 errors
+linking...
+Program Size: Code=7460 RO-data=292 RW-data=16 ZI-data=1328  
+FromELF: creating hex file...
+"STM32F103C8T6_AlphaCarControl\STM32F103C8T6_AlphaCarControl.axf" - 0 Error(s), 14 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.4.2.0.pack
+                ARM::CMSIS:CORE:3.40.0
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: CORE Version: 3.40.0
+
+<h2>Collection of Component include folders:</h2>
+  D:\wifi智能小车项目\CarControlCode\STM32F103C8T6_AlphaCarControl\MDK-ARM\RTE
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include
+  C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:3.40.0
+      Source file:   CMSIS\UserCodeTemplates\ARM\ITM_Retarget.c
+</pre>
+</body>
+</html>

@@ -1,0 +1,26 @@
+--cpu Cortex-M3
+"stm32f103c8t6_alphacarcontrol\stm32f1xx_hal_gpio.o"
+"stm32f103c8t6_alphacarcontrol\stm32f1xx_hal_rcc.o"
+"stm32f103c8t6_alphacarcontrol\stm32f1xx_hal_flash_ex.o"
+"stm32f103c8t6_alphacarcontrol\stm32f1xx_hal_pwr.o"
+"stm32f103c8t6_alphacarcontrol\stm32f1xx_hal_tim.o"
+"stm32f103c8t6_alphacarcontrol\stm32f1xx_hal_tim_ex.o"
+"stm32f103c8t6_alphacarcontrol\stm32f1xx_hal_flash.o"
+"stm32f103c8t6_alphacarcontrol\stm32f1xx_hal_dma.o"
+"stm32f103c8t6_alphacarcontrol\stm32f1xx_hal_cortex.o"
+"stm32f103c8t6_alphacarcontrol\stm32f1xx_hal_rcc_ex.o"
+"stm32f103c8t6_alphacarcontrol\stm32f1xx_hal.o"
+"stm32f103c8t6_alphacarcontrol\stm32f1xx_hal_gpio_ex.o"
+"stm32f103c8t6_alphacarcontrol\stm32f1xx_hal_uart.o"
+"stm32f103c8t6_alphacarcontrol\startup_stm32f103xb.o"
+"stm32f103c8t6_alphacarcontrol\main.o"
+"stm32f103c8t6_alphacarcontrol\stm32f1xx_hal_msp.o"
+"stm32f103c8t6_alphacarcontrol\stm32f1xx_it.o"
+"stm32f103c8t6_alphacarcontrol\car_motor.o"
+"stm32f103c8t6_alphacarcontrol\sg90_motor.o"
+"stm32f103c8t6_alphacarcontrol\system_stm32f1xx.o"
+--library_type=microlib --strict --scatter "STM32F103C8T6_AlphaCarControl\STM32F103C8T6_AlphaCarControl.sct"
+
+--diag_suppress=L6329 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "STM32F103C8T6_AlphaCarControl.map" -o STM32F103C8T6_AlphaCarControl\STM32F103C8T6_AlphaCarControl.axf
