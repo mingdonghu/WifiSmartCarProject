@@ -365,7 +365,7 @@
               <MiscControls>--C99</MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xB</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;    ../Drivers/STM32F1xx_HAL_Driver/Inc;    ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;    ../Drivers/CMSIS/Device/ST/STM32F1xx/Include;    ../Drivers/CMSIS/Include</IncludePath>
+              <IncludePath>../Inc;     ../Drivers/STM32F1xx_HAL_Driver/Inc;     ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;     ../Drivers/CMSIS/Device/ST/STM32F1xx/Include;     ../Drivers/CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -515,6 +515,11 @@
               <FileName>SG90_motor.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Src\SG90_motor.c</FilePath>
+            </File>
+            <File>
+              <FileName>car_trace.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\car_trace.c</FilePath>
             </File>
           </Files>
         </Group>

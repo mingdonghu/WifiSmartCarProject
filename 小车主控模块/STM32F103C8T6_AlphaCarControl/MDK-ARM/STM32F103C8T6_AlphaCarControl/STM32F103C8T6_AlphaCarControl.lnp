@@ -19,6 +19,7 @@
 "stm32f103c8t6_alphacarcontrol\stm32f1xx_it.o"
 "stm32f103c8t6_alphacarcontrol\car_motor.o"
 "stm32f103c8t6_alphacarcontrol\sg90_motor.o"
+"stm32f103c8t6_alphacarcontrol\car_trace.o"
 "stm32f103c8t6_alphacarcontrol\system_stm32f1xx.o"
 --library_type=microlib --strict --scatter "STM32F103C8T6_AlphaCarControl\STM32F103C8T6_AlphaCarControl.sct"
 

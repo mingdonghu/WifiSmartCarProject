@@ -37,10 +37,15 @@
 /* USER CODE BEGIN Includes */
 #include "car_motor.h"
 #include "SG90_motor.h"
+#include "stdio.h"
+
+#define DEBUG
 
 //#define CMSIS_LIB
-#ifdef CMSIS_LIB		
-#define ARM_MATH_CM3		//使用CMSIS库函数
+
+#ifdef CMSIS_LIB
+										//使用CMSIS库函数
+#define ARM_MATH_CM3		
 #include "arm_math.h"
 #include "arm_const_structs.h"
 #endif
@@ -88,7 +93,6 @@ void led_flashing()
 	HAL_Delay(1000);	
 }
 
-
 /* USER CODE END 0 */
 
 int main(void)
@@ -110,38 +114,37 @@ int main(void)
   SystemClock_Config();
 
   /* Initialize all configured peripherals */
-	/*
-			TM1 --- 电机PWM调速
-			TM2 --- 舵机PWM转角控制
-	*/
   MX_GPIO_Init();
-	MX_TIM2_Init();
-//  MX_TIM4_Init();
-//  MX_TIM3_Init();
-  MX_TIM1_Init();			
+  MX_TIM2_Init();
+  MX_TIM4_Init();
+  MX_TIM3_Init();
+  MX_TIM1_Init();
   MX_USART2_UART_Init();
 
   /* USER CODE BEGIN 2 */
 	PWM_init();
 	SG90_motor_init();
+	HAL_UART_Receive_IT(&huart2, RxData, 2);
 	
 #ifdef CMSIS_LIB
-	arm_abs_q7(Src,Dst,2);	//求Dst对应空间的绝对值并存入Src对应空间
+	arm_abs_q7(Src,Dst,2);	//求Dst对应空间的绝对数并存入Src对应空间
 	HAL_UART_Transmit(&huart2,Dst , 2, 0);
 #endif
 
-	HAL_UART_Receive_IT(&huart2, RxData, 2);
-	
-  /* USER CODE END 2 */
+#ifdef DEBUG
+	printf("main init is ok!\n");
+#endif
 
+  /* USER CODE END 2 */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
   /* USER CODE END WHILE */
+
   /* USER CODE BEGIN 3 */
-		
 		led_flashing();
+		
   }
   /* USER CODE END 3 */
 
@@ -428,6 +431,14 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : PB3 PB4 PB5 PB6 
+                           PB7 */
+  GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6 
+                          |GPIO_PIN_7;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
 }
 
 /* USER CODE BEGIN 4 */
@@ -475,10 +486,19 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 						break;
 			default : break;
 		}
-		HAL_UART_Transmit(&huart2,RxData , 2, 0);
+		//HAL_UART_Transmit(&huart2,RxData , 2, 0);
 		HAL_UART_Receive_IT(&huart2, RxData, 2);
-		//HAL_UART_Transmit(&huart2,&RxData[0] , 1, 1);
 }
+
+
+//printf函数重定向
+int fputc(int ch, FILE *f)
+{
+	uint8_t temp[1] = {ch};
+	HAL_UART_Transmit(&huart2,temp , 1, 2);
+	return ch;
+}
+
 
 /* USER CODE END 4 */
 
